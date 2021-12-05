@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>模块化开发</title>
+    <meta name="generator" content="VuePress 1.8.2">
+    
+    <meta name="description" content="">
+    
+    <link rel="preload" href="/assets/css/0.styles.e4d8b86b.css" as="style"><link rel="preload" href="/assets/js/app.b2090b30.js" as="script"><link rel="preload" href="/assets/js/2.688ee063.js" as="script"><link rel="preload" href="/assets/js/8.7c5a4100.js" as="script"><link rel="prefetch" href="/assets/js/10.8e7c2554.js"><link rel="prefetch" href="/assets/js/11.4321e89c.js"><link rel="prefetch" href="/assets/js/3.e8cc44f3.js"><link rel="prefetch" href="/assets/js/4.fbcf4621.js"><link rel="prefetch" href="/assets/js/5.ec4b3f90.js"><link rel="prefetch" href="/assets/js/6.27888615.js"><link rel="prefetch" href="/assets/js/7.46a6cb4e.js"><link rel="prefetch" href="/assets/js/9.f19d3de1.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.e4d8b86b.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container no-sidebar"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <!----></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><!---->  <!----> </aside> <main class="page"> <div class="theme-default-content content__default"><h2 id="模块化开发"><a href="#模块化开发" class="header-anchor">#</a> 模块化开发</h2> <h3 id="一、模块化"><a href="#一、模块化" class="header-anchor">#</a> 一、模块化</h3> <h4 id="_1-原因"><a href="#_1-原因" class="header-anchor">#</a> 1. 原因：</h4> <ul><li>随着ajax的引入，前后端越来越分离。</li> <li>客户端将对服务端请求过来的数据进行加工、处理、渲染，所以导致前端的代码越来越多。工作中项目的开发是多人共同进行的，所以难免会避免不了一些重名的问题（利用的全局变量），若是这样的话默写自己定义的属性可能会被其他的属性进行篡改，导致巨大的问题</li></ul> <h4 id="_2-解决的方法"><a href="#_2-解决的方法" class="header-anchor">#</a> 2. 解决的方法</h4> <ul><li>匿名函数</li></ul> <div class="language-javascript extra-class"><pre class="language-javascript"><code><span class="token comment">//匿名函数的使用,之所以加分号，是防止js在引入的时候出现冲突</span>
+<span class="token punctuation">;</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token comment">//缺点：因为函数自己有自己作用域，所以函数的复用性会变得比较差</span>
+</code></pre></div><ul><li>导出对象（模块化的基本封装）</li></ul> <div class="language-javaScript extra-class"><pre class="language-javascript"><code><span class="token comment">//只需要记住模块化的名字即可，相对大量的变量命名的冲突会少的多</span>
+<span class="token keyword">var</span> moduleA <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token comment">//利用该对象作为模块的出口</span>
+    <span class="token keyword">var</span> obj <span class="token operator">=</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+    obj<span class="token punctuation">.</span>flag <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+    obj<span class="token punctuation">.</span><span class="token function-variable function">myfunc</span> <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter">info</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>info<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">;</span>
+    <span class="token comment">//返回对象</span>
+    <span class="token keyword">return</span> obj<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><ul><li>模块化规范（CommonJS——&gt;node、AMD、CMD、也有ES6中的Modules）</li></ul> <h5 id="_1-commonjs-了解"><a href="#_1-commonjs-了解" class="header-anchor">#</a> 1）CommonJS(了解)</h5> <ul><li><p>核心：导出和导入</p></li> <li><p>CommonJS的导出</p></li></ul> <div class="language-javascript extra-class"><pre class="language-javascript"><code>module<span class="token punctuation">.</span>exports <span class="token operator">=</span> <span class="token punctuation">{</span>
+    flag <span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+    <span class="token function">test</span><span class="token punctuation">(</span><span class="token parameter">a<span class="token punctuation">,</span>b</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">return</span> a<span class="token operator">+</span>b<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre></div><ul><li>CommonJS的导入</li></ul> <div class="language-javascript extra-class"><pre class="language-javascript"><code><span class="token comment">//CommonJS模块</span>
+<span class="token keyword">let</span> <span class="token punctuation">{</span> test<span class="token punctuation">,</span>demo<span class="token punctuation">,</span>flag <span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'moduleA'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">//等同于</span>
+<span class="token keyword">let</span> _mA <span class="token operator">=</span><span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'modeleA'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">let</span> test <span class="token operator">=</span> _mA<span class="token punctuation">.</span>test<span class="token punctuation">;</span>
+<span class="token keyword">let</span> demo <span class="token operator">=</span> _mA<span class="token punctuation">.</span>demo<span class="token punctuation">;</span>
+<span class="token keyword">let</span> flag <span class="token operator">=</span> _mA<span class="token punctuation">.</span>flag<span class="token punctuation">;</span>
+</code></pre></div><h5 id="_2-es6模块化实现"><a href="#_2-es6模块化实现" class="header-anchor">#</a> 2）ES6模块化实现</h5> <h6 id="export导出"><a href="#export导出" class="header-anchor">#</a> export导出</h6> <div class="language-javascript extra-class"><pre class="language-javascript"><code><span class="token comment">//第一步设置引入的文件为module类型，保证js文件的独立性</span>
+<span class="token operator">&lt;</span>script src<span class="token operator">=</span><span class="token string">&quot;./aaa.js&quot;</span> type<span class="token operator">=</span><span class="token string">&quot;module&quot;</span><span class="token operator">&gt;</span><span class="token operator">&lt;</span><span class="token operator">/</span>script<span class="token operator">&gt;</span>
+<span class="token comment">//第二步  在js文件中设置导出接口（对象），以至于外面可以访问内容文件</span>
+<span class="token comment">//aaa.js文件的内容</span>
+flag<span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+<span class="token keyword">function</span> <span class="token function">sum</span><span class="token punctuation">(</span><span class="token parameter">num1<span class="token punctuation">,</span>num2</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token keyword">return</span> num1<span class="token operator">+</span>num2<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token comment">//第一种导出对象</span>
+exports<span class="token punctuation">{</span>
+    flag<span class="token punctuation">,</span>sum，Person
+<span class="token punctuation">}</span>
+<span class="token comment">//需要注意的是：对象在使用的时候必须new Person()进行创建</span>
+<span class="token comment">//第二种</span>
+<span class="token keyword">export</span> <span class="token keyword">var</span> flag <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+<span class="token keyword">export</span> <span class="token keyword">var</span> height <span class="token operator">=</span> <span class="token number">180</span><span class="token punctuation">;</span>
+<span class="token comment">//第三种  导出函数/类</span>
+<span class="token keyword">export</span> <span class="token keyword">function</span> <span class="token function">sum</span><span class="token punctuation">(</span><span class="token parameter">num1<span class="token punctuation">,</span>num2</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token keyword">return</span> num1<span class="token operator">+</span>num2<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">export</span> <span class="token keyword">class</span> <span class="token class-name">Person</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&quot;征途将是星辰大海&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token comment">//第四种  让用户自己定义名字，但是default只能有一个，如果出现多个将会区分不开</span>
+<span class="token keyword">const</span> address <span class="token operator">=</span> <span class="token string">&quot;Zhangwan&quot;</span>
+<span class="token keyword">export</span> <span class="token keyword">default</span> address<span class="token punctuation">;</span>
+<span class="token comment">//默认的使用方式</span>
+<span class="token keyword">import</span> ade <span class="token keyword">from</span> <span class="token string">&quot;./weizhi.js&quot;</span><span class="token punctuation">(</span>不存在则导入默认的方式<span class="token punctuation">)</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>ade<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+
+</code></pre></div><h6 id="import导入"><a href="#import导入" class="header-anchor">#</a> import导入</h6> <div class="language-javascript extra-class"><pre class="language-javascript"><code><span class="token comment">//导入{}定义的变量</span>
+Import <span class="token punctuation">{</span>flag，sum<span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">&quot;./aaa.js&quot;</span>
+<span class="token comment">//全部导入</span>
+<span class="token keyword">import</span> <span class="token operator">*</span> <span class="token keyword">as</span> aaa <span class="token keyword">from</span> <span class="token string">&quot;./vue/furture.js&quot;</span>
+</code></pre></div><h2 id="promise"><a href="#promise" class="header-anchor">#</a> Promise</h2> <h3 id="一、定义"><a href="#一、定义" class="header-anchor">#</a> 一、定义</h3> <ul><li>Promise到底是做什么的呢？是异步编程的一种解决方案（把请求和数据的处理进行了分开处理）</li></ul> <div class="language-vue extra-class"><pre class="language-vue"><code>执行流程：new---&gt;构造函数（1.保存了一些状态信息  2.执行传入的函数）
+在执行传入的回调函数时，会传入两个参数，resolve,reject本身又是函数
+new Promise((resolve,reject) =&gt;{
+	setTimeOut(()=&gt;{
+		resolve('Hello World');
+		reject('error message');
+	},1000)
+}).then((data)=&gt;{
+	console.log(data);
+    console.log(data);
+    console.log(data);
+    console.log(data);
+    console.log(data);
+    console.log(data);
+}).catch((err)=&gt;{
+	console.log(err);
+    console.log(err);
+    console.log(err);
+    console.log(err);
+    console.log(err);
+    console.log(err);
+})
+第二种写法：
+new Promise((resolve,reject) =&gt;{
+	setTimeOut(()=&gt;{
+		resolve('Hello World');
+		reject('error message');
+	},1000)
+}).then((data)=&gt;{
+	console.log(data);
+},err=&gt;{
+	console.log(error);
+}) 
+</code></pre></div><h3 id="二、promise的使用"><a href="#二、promise的使用" class="header-anchor">#</a> 二、Promise的使用</h3> <h4 id="_1-promise的链式处理"><a href="#_1-promise的链式处理" class="header-anchor">#</a> 1. Promise的链式处理</h4> <div class="language-vue extra-class"><pre class="language-vue"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span><span class="token punctuation">&gt;</span></span><span class="token script"><span class="token language-javascript">
+<span class="token keyword">new</span> <span class="token class-name">Promise</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">resolve<span class="token punctuation">,</span>reject</span><span class="token punctuation">)</span><span class="token operator">=&gt;</span><span class="token punctuation">{</span>
+    <span class="token function">setTimeOut</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">=&gt;</span><span class="token punctuation">{</span>
+        <span class="token function">resolve</span><span class="token punctuation">(</span><span class="token string">'aaa'</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span><span class="token number">1000</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token parameter">res</span><span class="token operator">=&gt;</span><span class="token punctuation">{</span>
+    <span class="token comment">//自己处理10行代码</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>res<span class="token punctuation">,</span><span class="token string">'第一层的10行处理代码'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Promise</span><span class="token punctuation">(</span> <span class="token parameter">resolve</span><span class="token operator">=&gt;</span><span class="token punctuation">{</span>
+        <span class="token function">resolve</span><span class="token punctuation">(</span>res <span class="token operator">+</span> <span class="token string">'111'</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token parameter">res</span><span class="token operator">=&gt;</span><span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>res<span class="token punctuation">,</span><span class="token string">'第二层的10行处理代码'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    
+    <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Promise</span><span class="token punctuation">(</span><span class="token parameter">resolve</span><span class="token operator">=&gt;</span><span class="token punctuation">{</span>
+        <span class="token function">resolve</span><span class="token punctuation">(</span>res <span class="token operator">+</span><span class="token string">'222'</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token parameter">res</span> <span class="token operator">=&gt;</span><span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>res <span class="token operator">+</span> <span class="token string">'第三层的10行处理代码'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token comment">//当其中的处理不需要发送到请求的时候可以使用简介的写法</span>
+<span class="token keyword">new</span> <span class="token class-name">Promise</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">resolve<span class="token punctuation">,</span>reject</span><span class="token punctuation">)</span><span class="token operator">=&gt;</span><span class="token punctuation">{</span>
+    <span class="token function">setTimeOut</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">=&gt;</span><span class="token punctuation">{</span>
+        <span class="token function">resolve</span><span class="token punctuation">(</span><span class="token string">'aaa'</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span><span class="token number">1000</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token parameter">res</span><span class="token operator">=&gt;</span><span class="token punctuation">{</span>
+    <span class="token comment">//自己处理10行代码</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>res<span class="token punctuation">,</span><span class="token string">'第一层的10行处理代码'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">//对结果进行第一次处理</span>
+
+<span class="token comment">//  return new Promise( resolve=&gt;{</span>
+<span class="token comment">//      resolve(res + '111')</span>
+    <span class="token keyword">return</span> Promise<span class="token punctuation">.</span><span class="token function">resolve</span><span class="token punctuation">(</span>res<span class="token operator">+</span><span class="token string">'111'</span><span class="token punctuation">)</span><span class="token comment">//等同于上面注释的代码</span>
+    <span class="token keyword">return</span> res<span class="token operator">+</span><span class="token string">'111'</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token parameter">res</span><span class="token operator">=&gt;</span><span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>res<span class="token punctuation">,</span><span class="token string">'第二层的10行处理代码'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    
+    <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Promise</span><span class="token punctuation">(</span><span class="token parameter">resolve</span><span class="token operator">=&gt;</span><span class="token punctuation">{</span>
+        <span class="token function">resolve</span><span class="token punctuation">(</span>res <span class="token operator">+</span><span class="token string">'222'</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token parameter">res</span> <span class="token operator">=&gt;</span><span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>res <span class="token operator">+</span> <span class="token string">'第三层的10行处理代码'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>    
+</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">&gt;</span></span>
+</code></pre></div><h4 id="_2-promise的all方法的使用"><a href="#_2-promise的all方法的使用" class="header-anchor">#</a> 2. Promise的all方法的使用</h4> <ul><li>原因：当有一个需求需要同时拿到两个数据的时候，在进行下一步的时候，则可以利用promise的all方法</li></ul> <div class="language-vue extra-class"><pre class="language-vue"><code>Promise.all([
+	new Promise((resolve,reject) =&gt;{
+		$.ajax({
+			url:'url1',
+			success:function(data){
+				resolve(data)
+			}
+		})
+	}),
+	new Promise((resolve,reject) =&gt;{
+		$.ajax({
+			url:'url2',
+			success:function(data){
+				resolve(data)
+			}
+		})
+	})
+]).then(results=&gt;{
+	console.log(results);
+})
+</code></pre></div></div> <footer class="page-edit"><!----> <!----></footer> <!----> </main></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.b2090b30.js" defer></script><script src="/assets/js/2.688ee063.js" defer></script><script src="/assets/js/8.7c5a4100.js" defer></script>
+  </body>
+</html>
