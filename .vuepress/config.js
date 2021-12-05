@@ -71,6 +71,9 @@ module.exports = {
           "vue_com",
           "Vuex"
       ],
+      "/blogs/back-end/vue/": [
+          "spring"
+      ],
       "/blogs/front-end/js/":"auto"
     },
     "type": "blog",
